@@ -12,6 +12,18 @@ const getCategoryData = (cb)=>{
     })
 }
 
+const getProductsData = (cb)=>{
+    let sql = "select * from products";
+
+    db.query(sql, (err, output)=>{
+       if(!err){
+           cb(output);
+       }else{
+           console.log("An error occured", err);
+       }
+    });
+}
+
 const postProductData = (product, cb) => {
     
     let sql = "insert into Products set ?";
@@ -40,17 +52,6 @@ const updateProductData = (product, cb) => {
     
 }
 
-const getProductsData = (cb)=>{
-    let sql = "select * from products";
-
-    db.query(sql, (err, output)=>{
-       if(!err){
-           cb(output);
-       }else{
-           console.log("An error occured", err);
-       }
-    });
-}
 
 const getProductById = (id, cb)=>{
     let sql = "select * from products where prod_id = ?";
@@ -64,10 +65,23 @@ const getProductById = (id, cb)=>{
     })
 }
 
+const deleteProductData = (id, cb)=>{
+     let sql = "delete from products where prod_id = ?";
+
+     db.query(sql, id, (err, output)=>{
+         if(!err){
+             cb(output);
+         }else{
+             console.log("An error occured!!", err);
+         }
+     })
+}
+
 module.exports = {
     getCat: getCategoryData,
     getAllProd: getProductsData,
     getProd: getProductById,
     postProd: postProductData,
-    updateProd: updateProductData
+    updateProd: updateProductData,
+    deleteProd: deleteProductData
 }

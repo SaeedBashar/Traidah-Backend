@@ -22,12 +22,24 @@ app.use(bodyParser.json());
 app.use((req, res, next)=>{
     res.setHeader('Access-Control-Allow-Origin', "*");
     res.setHeader('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept");
+    res.setHeader('Access-Control-Allow-Methods', "POST, GET, DELETE, PUT, PATCH, OPTIONS");
     next();
 })
 
 
-app.use("/admin",adminRoutes);
 app.use("/", coreRoutes);
+app.use("/admin",adminRoutes);
+app.use("/user", usersRoutes);
+
+app.use("/test", (req, res, next)=>{
+   db.query( `create table if not exists cart_5550 ( 
+    prod_id int not null, 
+    quantity int not null
+)`, (err,output)=>{
+       console.log(output, "from test");
+       res.end("test done")
+   })
+})
 
 // app.use("/shared", sharedRoutes);
 // app.use("/core", coreRoutes);

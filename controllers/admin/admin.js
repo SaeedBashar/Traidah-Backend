@@ -10,7 +10,7 @@ exports.getProducts = (req, res, next)=>{
 
  exports.getProduct = (req, res, next)=>{
      let id = req.params.id;
-     console.log("This is the id",id);
+    //  console.log("This is the id",id);
      adminModel.getProd(id, (output)=>{
         res.json(output[0])
         // res.end();
@@ -36,5 +36,15 @@ exports.getProducts = (req, res, next)=>{
      adminModel.updateProd(req.body,(output)=>{
          console.log(output);
          res.json('Product Updated!!')
+     })
+ }
+
+ exports.deleteProduct = (req, res, next)=>{
+     let id = req.params.id;
+     console.log(id);
+
+     adminModel.deleteProd(id, (output)=>{
+         console.log("DELETED", output);
+         res.json('Product Deleted Successfully!!')
      })
  }
